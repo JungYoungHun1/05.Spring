@@ -1,0 +1,25 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.DeptMapper">	
+	<select id="allListDept" resultType="com.spring.dto.DeptDTO">
+		select * from dept
+	</select>
+	
+	<delete id="deleteDept">
+		DELETE FROM dept WHERE deptno = #{deptno}
+	</delete>
+	
+	<insert id="insertDept">
+		INSERT INTO dept VALUES(#{deptno}, #{dname}, #{loc})
+	</insert>
+	
+	<update id="updateDept">
+		UPDATE dept SET dname = #{dname}, loc = #{loc} WHERE deptno = #{deptno}
+	</update>
+	
+	<select id="selectDept" resultType="com.spring.dto.DeptDTO">
+		SELECT * FROM dept WHERE deptno = #{deptno}
+	</select>
+</mapper>
