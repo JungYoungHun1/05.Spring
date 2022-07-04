@@ -44,19 +44,16 @@ public class DeptRestController {
 	
 	@GetMapping(value="/api/dept")
 	public List<DeptDTO> getAllDepts(){
-		System.out.println(service.allListDept());
 		return service.allListDept();
 	};
 	
 	@GetMapping(value="/api/dept/{deptno}")
 	public DeptDTO selectDept(@PathVariable("deptno") int deptno){
-		System.out.println(service.selectDept(deptno));
 		return service.selectDept(deptno);
 	};
 	
 	@DeleteMapping(value="/api/dept/{deptno}")
 	public void deleteDept(@PathVariable("deptno") int deptno) {
-		System.out.println(deptno);
 		service.deleteDept(deptno);
 	}
 	
