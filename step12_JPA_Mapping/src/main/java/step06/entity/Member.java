@@ -1,5 +1,9 @@
-package step04.entity;
+package step06.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,16 +11,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
-//@Entity
+@Entity
+@ToString(exclude = {"memberProducts"})
 public class Member {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="member_id")
 	private Long id;
 	
 	@Column(length = 20)
@@ -24,15 +34,10 @@ public class Member {
 	
 	private Integer age;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	/*
-	 * - 개별 select 실행
-	 * - 실제 데이터를 필요로 하는 시점에만 select 실행
-	 * - 주의 사항 : toString()을 사용하는 경우 team 값을 반환하는 로직이 포함되어 있다면 
-	 *   		 team과 관련된 select 구문이 자동으로 실행됨	
-	 * 
-	 * */
-	@JoinColumn(name="team_id")
-	private Team team;
+	@OneToMany(mappedBy = "member")
+//	@OneToMany(mappedBy = "member", cascade = {CascadeType.REMOVE})
+	private List<Order> memberProducts = new ArrayList<Order>();
+	
+
 	
 }

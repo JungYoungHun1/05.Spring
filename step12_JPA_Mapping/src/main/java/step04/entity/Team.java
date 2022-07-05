@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 import lombok.Data;
 
 @Data
-@Entity
+//@Entity
 public class Team {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
