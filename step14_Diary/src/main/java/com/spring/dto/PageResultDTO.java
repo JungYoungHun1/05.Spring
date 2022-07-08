@@ -1,6 +1,7 @@
 package com.spring.dto;
 
 import java.util.List;
+
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -55,11 +56,11 @@ public class PageResultDTO<DTO, EN> {
 		
 		start = endPage - 9;
 		
-		prev = start >1;
+		prev = page >1;
 		
-		end = totalPage < endPage ? endPage : totalPage;
+		end = totalPage > endPage ? endPage : totalPage;
 		
-		next = totalPage > endPage;
+		next = totalPage > page;
 		
 		pageList = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
 	
