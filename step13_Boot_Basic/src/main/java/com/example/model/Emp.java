@@ -15,6 +15,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.example.dto.DeptDTO;
 import com.example.dto.EmpDTO;
 import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -54,6 +55,7 @@ public class Emp {
 
 	
 public EmpDTO toDTO(Emp emp) {
+	Dept dept = emp.getDept();
 	EmpDTO dto = EmpDTO.builder().empno(emp.getEmpno())
 								 .ename(emp.getEname())
 								 .job(emp.getJob())
@@ -61,7 +63,7 @@ public EmpDTO toDTO(Emp emp) {
 								 .hiredate(emp.getHiredate())
 								 .sal(emp.getSal())
 								 .comm(emp.getComm())
-								 .dept(emp.getDept())
+								 .dept(dept.toDTO(dept))
 								 .build();
 	return dto;
 	

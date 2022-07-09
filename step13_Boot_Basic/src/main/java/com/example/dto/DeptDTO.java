@@ -21,7 +21,7 @@ import net.bytebuddy.asm.Advice.Return;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DeptDTO {
-	@Id
+//	@Id
 	private Long deptno;
 	
 	private String dname;
@@ -33,12 +33,13 @@ public class DeptDTO {
 		}
 	}
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "dept")
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "dept")
 	List<Emp> emps = new ArrayList<Emp>();
 	
-	public Dept dtoToEntity(DeptDTO deptDTO) {
+	public Dept ToEntity(DeptDTO deptDTO) {
 		Dept deptEntity = Dept.builder()
+							  .deptno(deptDTO.getDeptno())
 							  .dname(deptDTO.getDname())
 							  .loc(deptDTO.getLoc())
 							  .build();

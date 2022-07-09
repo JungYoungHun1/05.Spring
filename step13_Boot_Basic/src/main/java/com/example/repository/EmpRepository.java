@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.dto.EmpDTO;
 import com.example.model.Dept;
 import com.example.model.Emp;
 @Repository
@@ -19,5 +20,6 @@ public interface EmpRepository extends JpaRepository<Emp, Long>{
 	public void deleteEmpByEmpno(Long empno);
 	
 	Page<Emp> findByEmpnoBetween(long from, long to, Pageable pageable);
+	public void save(EmpDTO dto);
 
 }

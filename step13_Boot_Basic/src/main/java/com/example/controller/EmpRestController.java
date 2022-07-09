@@ -44,8 +44,8 @@ public class EmpRestController {
 	
 	@GetMapping("/emps")
 	public PageResultDTO<EmpDTO, Emp> getEmps(PageRequestDTO pageDTO){
-		System.out.println("====PageRequestDTO====");
-		System.out.println(pageDTO);
+//		System.out.println("====PageRequestDTO====");
+//		System.out.println(pageDTO);
 		PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
 		                        .page(pageDTO.getPage())
 		                        .size(10)
@@ -53,9 +53,9 @@ public class EmpRestController {
 
 		PageResultDTO<EmpDTO, Emp> pageResultDTO = empService.getList(pageRequestDTO);
 
-		System.out.println(pageResultDTO.isPrev()); //?? false
-		System.out.println(pageResultDTO.isNext()); //?? next
-		System.out.println(pageResultDTO.getTotalPage()); //?? 20
+//		System.out.println(pageResultDTO.isPrev()); //?? false
+//		System.out.println(pageResultDTO.isNext()); //?? next
+//		System.out.println(pageResultDTO.getTotalPage()); //?? 20
 
 		System.out.println("====PageRequestDTO 객체값 출력(1번 페이지에 있는 내용만)====");
 		// ??
@@ -67,49 +67,58 @@ public class EmpRestController {
 	}
 	
 	@GetMapping(value = "/emp/{empno}")
-	public Emp getEmpByEmpno(@PathVariable Long empno) {
-		System.out.println(empno);
-		if(empService.getEmpByEmpno(empno) != null) {
-			return empService.getEmpByEmpno(empno);
-		}else {
-			return null;
-		}
+	public EmpDTO getEmpByEmpno(@PathVariable Long empno) {
+//		System.out.println(empno);
+		EmpDTO empDTO=empService.getEmpByEmpno(empno);
+		return empDTO;
+
 	}
 	
 	
-//	@PostMapping(value="/emp", consumes = MediaType.APPLICATION_JSON_VALUE)
-//	public void insertEmp(@RequestBody Emp param) {
-//		Emp emp = new Emp();
+	@PostMapping(value="/emp", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void insertEmp(@RequestBody EmpDTO param) {
+//		EmpDTO emp = new Emp();
 //	
-//
+//		
 //		if(getEmpByEmpno(param.getEmpno()) == null) { 
 //		emp.setEmpno(param.getEmpno());
 //		emp.setEname(param.getEname());
 //		emp.setDept(param.getDept());
-//		
-//		
-////		emp.setDeptno(param.getDeptno());
-//		empService.save(emp);
-//		}
-//	}
-//	
-//	@PutMapping(value = "/emp/{empno}", consumes = MediaType.APPLICATION_JSON_VALUE)
-//	public void updateEmp(@PathVariable Long empno, @RequestBody Emp param) {
-//	
-//		Emp emp = getEmpByEmpno(empno);
+		
+		
+//		emp.setDeptno(param.getDeptno());
+//		if(getEmpByEmpno(param.getEmpno()) == null) {
+//			empService.save(param);
+//			}
+			EmpDTO dto = getEmpByEmpno(param.getEmpno());
+			if(dto == null) {
+				empService.save(param);
+			}
+		}
+	
+	
+	@PutMapping(value = "/emp/{empno}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void updateEmp(@PathVariable Long empno, @RequestBody EmpDTO param) {
+	
+		
 //		if(emp != null) {
-//			emp.setEmpno(empno);
-//			emp.setEname(param.getEname());
-//			emp.setDept(param.getDept());
-////			emp.setDeptno(param.getDeptno());
-//			empService.save(emp);
+//			param.setEmpno(empno);
+//			empService.save(param);
 //		}
-//	}
+		EmpDTO dto = getEmpByEmpno(empno);
+		if(dto != null) {
+			
+		dto.setEmpno(empno);
+		dto.setEname(param.getEname());
+		dto.setDept(param.getDept());
+		empService.save(dto);
+		}
+			
+	}
 	
 	
 	@DeleteMapping(value = "/emp/{empno}")
 	public void deleteEmpByEmpno(@PathVariable Long empno) {
-		System.out.println(empno);
 		empService.deleteEmpByEmpno(empno);
 	}
 }
