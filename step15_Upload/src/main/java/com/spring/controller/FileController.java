@@ -6,14 +6,21 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tomcat.util.file.ConfigurationSource.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -120,21 +127,37 @@ public class FileController {
 	  return fileRepository.findAll();
 	}
 	// 파일 다운로드
+//	@GetMapping("/file-download/{id}")
+//	public void downloadFile(@PathVariable Long id, HttpServletResponse response) throws FileNotFoundException{
+//		FileEntity file = fileRepository.findById(id).get();
+//		response.setHeader("Content-Disposition", "attachment;filename=\""+file.getFilename()+"\";");
+//		FileInputStream fis = new FileInputStream(file.getFilePath());
+//		try {
+//			OutputStream os = response.getOutputStream();
+//			int readCount = 0;
+//			byte[] buffer = new byte[1024];
+//			while((readCount = fis.read(buffer)) != -1) {
+//				os.write(buffer, 0, readCount);
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
+	
 	@GetMapping("/file-download/{id}")
-	public void downloadFile(@PathVariable Long id, HttpServletResponse response) throws FileNotFoundException{
-		FileEntity file = fileRepository.findById(id).get();
-		response.setHeader("Content-Disposition", "attachment;filename=\""+file.getFilename()+"\";");
-		FileInputStream fis = new FileInputStream(file.getFilePath());
-		try {
-			OutputStream os = response.getOutputStream();
-			int readCount = 0;
-			byte[] buffer = new byte[1024];
-			while((readCount = fis.read(buffer)) != -1) {
-				os.write(buffer, 0, readCount);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public ResponseEntity<Resource> downloadFile(@PathVariable Long id) throws IOException {
+	  FileEntity fileEntity = fileRepository.findById(id).get();
+
+	  Path path = Paths.get(fileEntity.getFilePath());
+	  Resource resource = new InputStreamResource(Files.newInputStream((path)));
+
+	  HttpHeaders headers = new HttpHeaders();
+	  headers.setContentDisposition(ContentDisposition.builder("attachment")
+	                  .filename(fileEntity.getOriginalFilename(), StandardCharsets.UTF_8)
+	                  .build());
+	  headers.add(HttpHeaders.CONTENT_TYPE, "text/plain");
+
+	  return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
 	
 }

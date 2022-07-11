@@ -44,21 +44,12 @@ public class EmpRestController {
 	
 	@GetMapping("/emps")
 	public PageResultDTO<EmpDTO, Emp> getEmps(PageRequestDTO pageDTO){
-//		System.out.println("====PageRequestDTO====");
-//		System.out.println(pageDTO);
+
 		PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
 		                        .page(pageDTO.getPage())
 		                        .size(10)
 		                        .build();
-
 		PageResultDTO<EmpDTO, Emp> pageResultDTO = empService.getList(pageRequestDTO);
-
-//		System.out.println(pageResultDTO.isPrev()); //?? false
-//		System.out.println(pageResultDTO.isNext()); //?? next
-//		System.out.println(pageResultDTO.getTotalPage()); //?? 20
-
-		System.out.println("====PageRequestDTO 객체값 출력(1번 페이지에 있는 내용만)====");
-		// ??
 		List<EmpDTO> resultEmps = new ArrayList<EmpDTO>(); 
 		pageResultDTO.getDtoList().forEach(EmpDTO -> resultEmps.add(EmpDTO));
 		
