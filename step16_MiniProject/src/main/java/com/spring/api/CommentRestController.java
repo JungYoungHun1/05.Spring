@@ -27,11 +27,10 @@ public class CommentRestController {
 	@Autowired
 	private CommentServiceImpl commentService;
 	
-//	@GetMapping("/comments/{boardNo}")
-//	public List<CommentDTO> getAllComment(@PathVariable Long boardNo, @RequestBody BoardDTO dto){
-//		dto.setBoardNo(boardNo);
-//		return commentService.getAllComment(dto);
-//	}	
+	@GetMapping("/comment/{boardNo}")
+	public List<CommentDTO> getAllComment(@PathVariable Long boardNo){
+		return commentService.getAllComment(boardNo);
+	}	
 	
 	@PostMapping(value="/comment", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void insertComment(@RequestBody CommentDTO param) {

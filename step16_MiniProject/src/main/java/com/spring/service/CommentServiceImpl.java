@@ -17,24 +17,20 @@ import com.spring.repository.CommentRepository;
 public class CommentServiceImpl implements CommentService {
 	
 	@Autowired CommentRepository commentRepository;
+	
+	@Autowired BoardRepository boardRepository;
+	
+	@Override
+	public List<CommentDTO> getAllComment(Long boardNo) {
+		BoardEntity boardEntity = boardRepository.findBoardByBoardNo(boardNo);
+		List<CommentEntity> commentEntities = commentRepository.findCommentByBoard(boardEntity);
+		List<CommentDTO> commentDTOs = new ArrayList<CommentDTO>();
+		for (CommentEntity commentEntity : commentEntities) {
+			commentDTOs.add(commentEntity.toDTO(commentEntity));
+		}
+		return commentDTOs;
+	}
 
-	
-//	@Override
-//	public List<CommentDTO> getAllComment(BoardDTO board) {
-//		
-//		List<CommentEntity> commentEntities = commentRepository.findAll(board);
-//		List<CommentDTO> commentDTOs = new ArrayList<CommentDTO>();
-//		for (CommentEntity commentEntity : commentEntities) {
-//			commentDTOs.add(commentEntity.toDTO(commentEntity));
-//		}
-//		return commentDTOs;
-//	}
-	
-//	@Override
-//	public CommentDTO getCommentByBoardNo(Long boardNo) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 	
 	@Override
 	public CommentDTO getCommentByCommentNo(Long commentNo) {

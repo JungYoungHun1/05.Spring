@@ -13,9 +13,8 @@ import com.spring.entity.CommentEntity;
 
 @Repository
 public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
-//	
-//	public List<CommentEntity> findAll(BoardEntity boardEntity);
-//	public CommentEntity findCommentByBoardNo(Long boardNo);
+		
+	public List<CommentEntity> findCommentByBoard(BoardEntity board);
 	
 	public CommentEntity findCommentByCommentNo(Long commentNo);
 

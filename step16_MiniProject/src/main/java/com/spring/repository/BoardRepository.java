@@ -11,9 +11,7 @@ import com.spring.entity.BoardEntity;
 
 @Repository
 public interface BoardRepository extends JpaRepository<BoardEntity, Long>{
-	
-	public List<BoardEntity> findAll();
-	
+		
 	public BoardEntity findBoardByBoardNo(Long boardNo);
 	
 	@Transactional
