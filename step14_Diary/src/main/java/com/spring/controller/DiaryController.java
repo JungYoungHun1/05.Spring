@@ -2,13 +2,17 @@ package com.spring.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.spring.dto.DiaryDTO;
 import com.spring.dto.PageRequestDTO;
@@ -18,8 +22,7 @@ import com.spring.repository.DiaryRepository;
 import com.spring.service.DiaryService;
 import com.spring.service.DiaryServiceImpl;
 
-
-
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,10 +37,27 @@ public class DiaryController {
 	@Autowired
 	DiaryRepository diaryRepository;
 	
-	@PostMapping(value = "/diary")
-	public void insertDiary(@RequestBody DiaryDTO dto) {
-		diaryService.insertDiary(dto);
+	
+	@GetMapping(value="/diary")
+	public void getDiary() throws Exception {
+		throw new Exception("예외 테스트");
 	}
+	
+//	@PostMapping(value = "/diary")
+//	public void insertDiary() throws Exception {
+////		diaryService.insertDiary(dto);
+//		throw new Exception("예외 테스트");
+//	}
+	
+//	@ExceptionHandler(Exception.class)
+//	public ResponseEntity<String> handleException(Exception e){
+//		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+//	}
+//	
+//	@ExceptionHandler(NoSuchElementException.class)
+//	public ResponseEntity<String> handleException2(Exception e){
+//		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+//	}
 	
 	@PostMapping("/diary-batch")
 	public void insertDiaryBatch() {
@@ -113,9 +133,9 @@ public class DiaryController {
 		pageResultDTO.getDtoList().forEach(diaryDTO -> System.out.println(diaryDTO));	
 	}
 	
-	@GetMapping("/diary")
-	public void getDiary(PageRequestDTO pageRequestDTO) {
-		System.out.println(pageRequestDTO);
-//		pageRequestDTO.getPage();
-	}
+//	@GetMapping("/diary")
+//	public void getDiary(PageRequestDTO pageRequestDTO) {
+//		System.out.println(pageRequestDTO);
+////		pageRequestDTO.getPage();
+//	}
 }

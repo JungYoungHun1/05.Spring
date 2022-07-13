@@ -11,11 +11,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaAuditing
 @EntityScan(basePackages = {"com.spring.entity"})
 @EnableJpaRepositories(basePackages = {"com.spring.repository"})
-@ComponentScan(basePackages = {"com.spring.controller", "com.spring.service"})
+@ComponentScan(basePackages = {"com.spring.exception","com.spring.service", "com.spring.controller"})
 public class Step14DiaryApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Step14DiaryApplication.class, args);
-	}
+   public static void main(String[] args) {
+      SpringApplication.run(Step14DiaryApplication.class, args);
+   }
 
 }
