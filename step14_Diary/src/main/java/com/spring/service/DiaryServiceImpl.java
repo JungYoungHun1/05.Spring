@@ -27,8 +27,16 @@ public class DiaryServiceImpl implements DiaryService {
 	@Transactional
 	@Override
 	public void insertDiary(DiaryDTO diaryDTO) {
-		Diary diaryEntity = diaryDTO.toEntity(diaryDTO);
+//		Diary diaryEntity = diaryDTO.toEntity(diaryDTO);
+		
+//		Diary diaryEntity = diaryRepository.findById(diaryDTO.getNo().orElseThrow(() -> new IllegalAccessException("ds"));
+//		Diary diaryEntity = diaryRepository.findById(diaryDTO.getNo()).orElseThrow(() -> new IllegalAccessException());
+		Diary diaryEntity = diaryRepository.findById(diaryDTO.getNo()).orElseThrow(()->new IllegalArgumentException());
+		diaryDTO.updateTitle(diaryDTO.getTitle()).ifPresent(diaryEntity::updateTitle);
+
+//		diaryEntity.updateTitle(diaryDTO.getTitle());
 		diaryRepository.save(diaryEntity);
+		
 		
 	}
 	@Transactional

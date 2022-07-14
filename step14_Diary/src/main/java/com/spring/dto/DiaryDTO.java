@@ -1,7 +1,7 @@
 package com.spring.dto;
 
 import java.time.LocalDateTime;
-
+import java.util.Optional;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,6 +36,10 @@ public class DiaryDTO {
 	public Diary toEntity(DiaryDTO dto) {
 		Diary diaryEntity = Diary.builder().no(dto.getNo()).title(dto.getTitle()).content(dto.getContent()).build();
 		return diaryEntity;
+	}
+	
+	public Optional<String> updateTitle(String title){
+		return Optional.ofNullable(title);
 	}
 	
 }
